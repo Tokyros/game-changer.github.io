@@ -29,7 +29,7 @@ const gameContainer = document.querySelector('.gameContainer');
 gameContainer.style.setProperty('--handleColor', gameData.handleColor);
 gameContainer.style.setProperty('--lightColor', gameData.lightColor);
 gameContainer.style.setProperty('--backColor', gameData.backColor);
-gameContainer.style.setProperty('--scale', gameData.scale);
+document.body.style.setProperty('--scale', gameData.scale);
 
 const audioCrank = new Audio('./sounds/lever.mp3');
 const audioSpin = new Audio('./sounds/Loop-long-spin.mp3');

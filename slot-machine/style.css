@@ -6,7 +6,7 @@
   
   body {
 	background-color: transparent;
-	min-height: 100vh;
+	min-height: calc(var(--scale) * 320px);
 	display: grid;
 	place-items: center;
   }
