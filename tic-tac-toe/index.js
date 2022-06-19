@@ -12,12 +12,15 @@ const borderSize = urlParams.get('borderSize') || '1';
 const cellElements = document.querySelectorAll('[data-cell]')
 const boardElement = document.getElementById('board')
 const root = document.querySelector(':root');
+
 const computerClickAudio = new Audio('219068__annabloom__click2.wav');
 computerClickAudio.preload= 'auto';
 const playerClickAudio = new Audio('536315__eeeeeeeeeeeeeeeeilas__screen-tap.mp3');
 playerClickAudio.preload = 'auto';
 const winAudio = new Audio('win.wav');
 winAudio.preload = 'auto'
+const lossAudio = new Audio('342756__rhodesmas__failure-01.wav');
+lossAudio.preload = 'auto'
 
 
 
@@ -82,10 +85,8 @@ function handleCellClick(e) {
 	placeMark(cell, currentClass)
     const winRow = checkWin(currentClass);
 	if (!!winRow) {
-        winAudio.play();
 		endGame(false, winRow, currentClass)
     }else if(isDraw()) {
-        winAudio.play();
         endGame(true)
 	} else {
         if(isPlayerTurn) {
@@ -165,13 +166,16 @@ function checkWin(currentClass) {
 function endGame(draw, winRow) {
     boardElement.className = 'board board-win';
     if(draw) {
+        lossAudio.play();
         window.parent.postMessage('draw', '*');
     } else {
         winRow.map((idx) => {
             cellElements[idx].classList.add('win')
         })
+        isPlayerTurn ? winAudio.play() : lossAudio.play();
+        const messageContent = isPlayerTurn ? 'win' : 'loss';
         setTimeout(() => {
-            isPlayerTurn ?  window.parent.postMessage('win', '*') : window.parent.postMessage('loss', '*');
+           window.parent.postMessage(messageContent, '*');
         }, 2000);
     }
 }
