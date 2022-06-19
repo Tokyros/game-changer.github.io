@@ -1,0 +1,100 @@
+* {
+	margin: 0 auto;
+	padding: 0;
+	box-sizing: border-box;
+  }
+  
+  body {
+	background-color: transparent;
+	min-height: 100vh;
+	display: grid;
+	place-items: center;
+  }
+  
+  .gameContainer {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position-x: var(--backgroundX, 0);
+	overflow: hidden;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+  .gameContainer .startButton {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 1em 3em;
+	z-index: 2;
+  }
+  .gameContainer .player {
+	position: absolute;
+	left: 5%;
+	top: var(--playerY, 50%);
+	width: 15%;
+	height: 20%;
+	background-size: contain;
+	background-position: right;
+	background-repeat: no-repeat;
+	transform: translateY(-50%) rotate(var(--rz, 0deg));
+	transform-origin: right;
+	transition: transform 0.25s;
+  }
+  .gameContainer .collectable {
+	position: absolute;
+	left: var(--collectableX, 100%);
+	top: var(--collectableY, 45%);
+	width: 9%;
+	height: 12%;
+	background-size: contain;
+	background-position: left;
+	background-repeat: no-repeat;
+	transform: translateY(-50%);
+  }
+  .gameContainer .miniCollectable {
+	position: absolute;
+	left: var(--collectableX, 100%);
+	top: var(--collectableY, 50%);
+	width: 4.5%;
+	height: 6%;
+	background-size: contain;
+	background-position: left;
+	background-repeat: no-repeat;
+	-webkit-animation: miniCollectable 0.5s ease-out;
+			animation: miniCollectable 0.5s ease-out;
+  }
+  @-webkit-keyframes miniCollectable {
+	to {
+	  transform: translate(var(--tx), var(--ty)) scale(0);
+	}
+  }
+  @keyframes miniCollectable {
+	to {
+	  transform: translate(var(--tx), var(--ty)) scale(0);
+	}
+  }
+  .gameContainer .score {
+	position: absolute;
+	right: 1%;
+	top: 0%;
+	color: #fff;
+	width: 500px;
+	paint-order: stroke;
+  }
+  .gameContainer .score text {
+	fill: white;
+	stroke: black;
+	stroke-width: 4px;
+	font: 20px sans-serif;
+	text-anchor: end;
+  }
+  
+  .u-hide {
+	display: none !important;
+  }/*# sourceMappingURL=style.css.map */
