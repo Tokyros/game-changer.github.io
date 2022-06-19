@@ -1,0 +1,543 @@
+* {
+	margin: 0 auto;
+	padding: 0;
+	box-sizing: border-box;
+  }
+  
+  body {
+	background-color: #111;
+	min-height: 100vh;
+	display: grid;
+	place-items: center;
+  }
+  
+  .gameContainer {
+	transform: scale(var(--scale, 1));
+	--slotsPadding: 50px;
+	--slotsBR: 10px;
+	--slotWidth: 50px;
+	--slotHeight: 60px;
+	--slotGap: 10px;
+	--handleColor: #aaa;
+	--lightColor: #fff;
+	--backColor: #444;
+  }
+  
+  .slots {
+	position: relative;
+	display: flex;
+	gap: var(--slotGap);
+	background-color: var(--backColor);
+	padding: var(--slotsPadding, 40px);
+	border-radius: var(--slotsBR, 10px);
+	perspective: 500px;
+  }
+  .slots *:not(:empty) {
+	transform-style: preserve-3d;
+  }
+  .slots::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 190px;
+	height: 80px;
+	transform: translate(-50%, -50%);
+	background-color: var(--backColor);
+	border: 15px solid var(--handleColor);
+	z-index: -1;
+	border-radius: 4px;
+  }
+  .slots .slot {
+	position: relative;
+	width: var(--slotWidth);
+	height: var(--slotHeight);
+	background-color: #eee;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3333333333);
+	overflow: hidden;
+  }
+  .slots .slot::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.2), 10%, rgba(0, 0, 0, 0), 90%, rgba(0, 0, 0, 0.2));
+  }
+  .slots .slot-icon {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 70%;
+	height: 70%;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	-webkit-animation: slotIconDrop var(--duration, 0s) linear forwards;
+			animation: slotIconDrop var(--duration, 0s) linear forwards;
+  }
+  @-webkit-keyframes slotIconDrop {
+	from {
+	  transform: translate(-50%, -175%) rotateX(-90deg);
+	}
+	to {
+	  transform: translate(-50%, 75%) rotateX(90deg);
+	}
+  }
+  @keyframes slotIconDrop {
+	from {
+	  transform: translate(-50%, -175%) rotateX(-90deg);
+	}
+	to {
+	  transform: translate(-50%, 75%) rotateX(90deg);
+	}
+  }
+  .slots .slot-icon_last {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 70%;
+	height: 70%;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	-webkit-animation: slotIconLast 500ms linear forwards;
+			animation: slotIconLast 500ms linear forwards;
+  }
+  @-webkit-keyframes slotIconLast {
+	from {
+	  transform: translate(-50%, -175%) rotateX(-90deg);
+	}
+	to {
+	  transform: translate(-50%, -50%) rotateX(0deg);
+	}
+  }
+  @keyframes slotIconLast {
+	from {
+	  transform: translate(-50%, -175%) rotateX(-90deg);
+	}
+	to {
+	  transform: translate(-50%, -50%) rotateX(0deg);
+	}
+  }
+  .slots .slot-icon_out {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 70%;
+	height: 70%;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	-webkit-animation: slotIconOut 100ms linear forwards;
+			animation: slotIconOut 100ms linear forwards;
+  }
+  @-webkit-keyframes slotIconOut {
+	from {
+	  transform: translate(-50%, -50%) rotateX(0deg);
+	}
+	to {
+	  transform: translate(-50%, 75%) rotateX(90deg);
+	}
+  }
+  @keyframes slotIconOut {
+	from {
+	  transform: translate(-50%, -50%) rotateX(0deg);
+	}
+	to {
+	  transform: translate(-50%, 75%) rotateX(90deg);
+	}
+  }
+  .slots .handle {
+	position: absolute;
+	left: 100%;
+	bottom: var(--slotsPadding);
+	width: 40px;
+	height: 160px;
+	background: none;
+	border: none;
+	transform: translateX(-10px);
+  }
+  .slots .handle-base {
+	position: absolute;
+	left: 10px;
+	bottom: 10px;
+	width: 20px;
+	height: 40px;
+	background-color: var(--handleColor);
+	background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(119, 119, 119, 0), rgba(0, 0, 0, 0.2666666667));
+	-webkit-clip-path: polygon(0 0, 50% 0, 100% 25%, 100% 75%, 50% 100%, 0 100%);
+			clip-path: polygon(0 0, 50% 0, 100% 25%, 100% 75%, 50% 100%, 0 100%);
+  }
+  .slots .handle-pole {
+	position: absolute;
+	left: 15px;
+	bottom: 30px;
+	width: 10px;
+	height: 110px;
+	background-color: var(--handleColor);
+	background-image: linear-gradient(120deg, rgba(255, 255, 255, 0.3333333333), rgba(0, 0, 0, 0.2));
+	border-radius: 10px;
+	transform-origin: bottom;
+	transition: transform 0.5s;
+  }
+  .slots .handle-ball {
+	position: absolute;
+	left: -11px;
+	top: -16px;
+	width: 32px;
+	height: 32px;
+	border-radius: 100%;
+	background-color: var(--handleColor);
+	background-image: radial-gradient(circle at top, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.4666666667));
+	transition: transform 0.5s;
+  }
+  .slots .handle-ball::after {
+	content: "";
+	position: absolute;
+	left: -4px;
+	top: 0;
+	display: block;
+	width: 40px;
+	height: 60px;
+	-webkit-clip-path: polygon(50% 100%, 0 50%, 25% 50%, 25% 20%, 75% 20%, 75% 50%, 100% 50%);
+			clip-path: polygon(50% 100%, 0 50%, 25% 50%, 25% 20%, 75% 20%, 75% 50%, 100% 50%);
+	background-color: var(--handleColor);
+	transition: opacity 0.25s;
+	-webkit-animation: handleArrow 0.5s infinite ease-in-out alternate;
+			animation: handleArrow 0.5s infinite ease-in-out alternate;
+  }
+  @-webkit-keyframes handleArrow {
+	from {
+	  transform: translateY(-80%) scale(0.5);
+	}
+	to {
+	  transform: translateY(-90%) scale(0.5);
+	}
+  }
+  @keyframes handleArrow {
+	from {
+	  transform: translateY(-80%) scale(0.5);
+	}
+	to {
+	  transform: translateY(-90%) scale(0.5);
+	}
+  }
+  .slots .handle:active:not(:disabled) .handle-pole {
+	transform: rotateX(-90deg) rotateY(-90deg);
+  }
+  .slots .handle:active:not(:disabled) .handle-ball {
+	transform: rotateX(90deg) rotateZ(-90deg);
+  }
+  .slots .handle:active .handle-ball::after, .slots .handle:disabled .handle-ball::after {
+	opacity: 0;
+  }
+  .slots .handle:disabled ~ .lights > .light {
+	-webkit-animation: lightRun 0.8s var(--delay, 0s) infinite;
+			animation: lightRun 0.8s var(--delay, 0s) infinite;
+  }
+  .slots .handle:active:not(:disabled) ~ .lights > .light {
+	-webkit-animation: lightBlink 5s forwards;
+			animation: lightBlink 5s forwards;
+  }
+  .slots .handle.win ~ .lights > .light {
+	-webkit-animation: lightBlink 0.25s infinite ease-in-out;
+			animation: lightBlink 0.25s infinite ease-in-out;
+  }
+  .slots .lights {
+	position: absolute;
+	inset: 0;
+  }
+  .slots .lights > .light {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	background-color: var(--lightColor);
+	transition: background-color 1s;
+	-webkit-animation: lightBlink 1s 1s backwards infinite alternate ease-in-out;
+			animation: lightBlink 1s 1s backwards infinite alternate ease-in-out;
+  }
+  @-webkit-keyframes lightRun {
+	0%, 40%, 100% {
+	  background-color: rgba(255, 255, 255, 0.2);
+	}
+	2% {
+	  background-color: var(--lightColor);
+	}
+  }
+  @keyframes lightRun {
+	0%, 40%, 100% {
+	  background-color: rgba(255, 255, 255, 0.2);
+	}
+	2% {
+	  background-color: var(--lightColor);
+	}
+  }
+  @-webkit-keyframes lightBlink {
+	0% {
+	  background-color: rgba(255, 255, 255, 0.2);
+	}
+	100% {
+	  background-color: var(--lightColor);
+	}
+  }
+  @keyframes lightBlink {
+	0% {
+	  background-color: rgba(255, 255, 255, 0.2);
+	}
+	100% {
+	  background-color: var(--lightColor);
+	}
+  }
+  .slots .lights > .light:nth-child(1) {
+	--delay: 0s;
+  }
+  .slots .lights > .light:nth-child(2) {
+	--delay: 0.0222222222s;
+  }
+  .slots .lights > .light:nth-child(3) {
+	--delay: 0.0444444444s;
+  }
+  .slots .lights > .light:nth-child(4) {
+	--delay: 0.0666666667s;
+  }
+  .slots .lights > .light:nth-child(5) {
+	--delay: 0.0888888889s;
+  }
+  .slots .lights > .light:nth-child(6) {
+	--delay: 0.1111111111s;
+  }
+  .slots .lights > .light:nth-child(7) {
+	--delay: 0.1333333333s;
+  }
+  .slots .lights > .light:nth-child(8) {
+	--delay: 0.1555555556s;
+  }
+  .slots .lights > .light:nth-child(9) {
+	--delay: 0.1777777778s;
+  }
+  .slots .lights > .light:nth-child(10) {
+	--delay: 0.2s;
+  }
+  .slots .lights > .light:nth-child(11) {
+	--delay: 0.2222222222s;
+  }
+  .slots .lights > .light:nth-child(12) {
+	--delay: 0.2444444444s;
+  }
+  .slots .lights > .light:nth-child(13) {
+	--delay: 0.2666666667s;
+  }
+  .slots .lights > .light:nth-child(14) {
+	--delay: 0.2888888889s;
+  }
+  .slots .lights > .light:nth-child(15) {
+	--delay: 0.3111111111s;
+  }
+  .slots .lights > .light:nth-child(16) {
+	--delay: 0.3333333333s;
+  }
+  .slots .lights > .light:nth-child(17) {
+	--delay: 0.3555555556s;
+  }
+  .slots .lights > .light:nth-child(18) {
+	--delay: 0.3777777778s;
+  }
+  .slots .lights > .light:nth-child(19) {
+	--delay: 0.4s;
+  }
+  .slots .lights > .light:nth-child(20) {
+	--delay: 0.4222222222s;
+  }
+  .slots .lights > .light:nth-child(21) {
+	--delay: 0.4444444444s;
+  }
+  .slots .lights > .light:nth-child(22) {
+	--delay: 0.4666666667s;
+  }
+  .slots .lights > .light:nth-child(23) {
+	--delay: 0.4888888889s;
+  }
+  .slots .lights > .light:nth-child(24) {
+	--delay: 0.5111111111s;
+  }
+  .slots .lights > .light:nth-child(25) {
+	--delay: 0.5333333333s;
+  }
+  .slots .lights > .light:nth-child(26) {
+	--delay: 0.5555555556s;
+  }
+  .slots .lights > .light:nth-child(27) {
+	--delay: 0.5777777778s;
+  }
+  .slots .lights > .light:nth-child(28) {
+	--delay: 0.6s;
+  }
+  .slots .lights > .light:nth-child(29) {
+	--delay: 0.6222222222s;
+  }
+  .slots .lights > .light:nth-child(30) {
+	--delay: 0.6444444444s;
+  }
+  .slots .lights > .light:nth-child(31) {
+	--delay: 0.6666666667s;
+  }
+  .slots .lights > .light:nth-child(32) {
+	--delay: 0.6888888889s;
+  }
+  .slots .lights > .light:nth-child(33) {
+	--delay: 0.7111111111s;
+  }
+  .slots .lights > .light:nth-child(34) {
+	--delay: 0.7333333333s;
+  }
+  .slots .lights > .light:nth-child(35) {
+	--delay: 0.7555555556s;
+  }
+  .slots .lights > .light:nth-child(36) {
+	--delay: 0.7777777778s;
+  }
+  .slots .lights > .light:nth-child(1) {
+	left: 12px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(19) {
+	left: 258px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(2) {
+	left: 32.5px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(20) {
+	left: 237.5px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(3) {
+	left: 53px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(21) {
+	left: 217px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(4) {
+	left: 73.5px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(22) {
+	left: 196.5px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(5) {
+	left: 94px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(23) {
+	left: 176px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(6) {
+	left: 114.5px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(24) {
+	left: 155.5px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(7) {
+	left: 135px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(25) {
+	left: 135px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(8) {
+	left: 155.5px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(26) {
+	left: 114.5px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(9) {
+	left: 176px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(27) {
+	left: 94px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(10) {
+	left: 196.5px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(28) {
+	left: 73.5px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(11) {
+	left: 217px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(29) {
+	left: 53px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(12) {
+	left: 237.5px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(30) {
+	left: 32.5px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(13) {
+	left: 258px;
+	top: 12px;
+  }
+  .slots .lights > .light:nth-child(31) {
+	left: 12px;
+	top: 148px;
+  }
+  .slots .lights > .light:nth-child(14) {
+	left: 258px;
+	top: 34.6666666667px;
+  }
+  .slots .lights > .light:nth-child(32) {
+	left: 12px;
+	top: 125.3333333333px;
+  }
+  .slots .lights > .light:nth-child(15) {
+	left: 258px;
+	top: 57.3333333333px;
+  }
+  .slots .lights > .light:nth-child(33) {
+	left: 12px;
+	top: 102.6666666667px;
+  }
+  .slots .lights > .light:nth-child(16) {
+	left: 258px;
+	top: 80px;
+  }
+  .slots .lights > .light:nth-child(34) {
+	left: 12px;
+	top: 80px;
+  }
+  .slots .lights > .light:nth-child(17) {
+	left: 258px;
+	top: 102.6666666667px;
+  }
+  .slots .lights > .light:nth-child(35) {
+	left: 12px;
+	top: 57.3333333333px;
+  }
+  .slots .lights > .light:nth-child(18) {
+	left: 258px;
+	top: 125.3333333333px;
+  }
+  .slots .lights > .light:nth-child(36) {
+	left: 12px;
+	top: 34.6666666667px;
+  }/*# sourceMappingURL=style.css.map */
