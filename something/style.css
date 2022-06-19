@@ -1,0 +1,146 @@
+:root {
+	--cell-size: 100px;
+	--color: #81c3fd;
+	/* for hover */
+	--color-set: #0275d8;
+	/* when set */
+	--l: 10px;
+	/* X line-width */
+}
+
+body {
+	margin: 0;
+}
+
+.board {
+	width: 100vw;
+	height: 100vh;
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	justify-items: center;
+	align-items: center;
+	grid-template-columns: repeat(3, auto)
+}
+
+.cell {
+	width: var(--cell-width);
+	height: var(--cell-height);
+	border: var(--border-size) solid var(--board-color);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	cursor: pointer;
+}
+
+/* remove border for edges */
+.cell:nth-child(1),
+.cell:nth-child(2),
+.cell:nth-child(3) {
+	border-top: none;
+}
+
+.cell:nth-child(1),
+.cell:nth-child(4),
+.cell:nth-child(7) {
+	border-left: none;
+}
+
+.cell:nth-child(3),
+.cell:nth-child(6),
+.cell:nth-child(9) {
+	border-right: none;
+}
+
+.cell:nth-child(7),
+.cell:nth-child(8),
+.cell:nth-child(9) {
+	border-bottom: none;
+}
+
+.cell.x,
+.cell.circle {
+	cursor: not-allowed;
+}
+
+.board:not(.board-win) .cell:not(.circle):not(.x):hover {
+	background: var(--player-element);
+	background-size: 80% 80%;
+	background-repeat: no-repeat;
+	background-position: center;
+	opacity: 0.5;
+}
+
+.cell:not(.circle).x {
+	background: var(--player-element);
+	background-size: 80% 80%;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.cell:not(.x).circle {
+	animation: circltAnimation 1s forwards;
+	animation-delay: 0.3s;
+}
+
+@keyframes circltAnimation {
+	from {
+		background: var(--computer-element);
+		background-size: 70% 70%;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+
+	to {
+		background: var(--computer-element);
+		background-size: 80% 80%;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+}
+
+.board.board-win .cell {
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.cell.circle.win {
+	animation: cumputerWinAnimation 1s linear infinite;
+	background: var(--computer-element);
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.cell.x.win {
+	animation: playerWinAnimation 1s linear infinite;
+}
+
+@keyframes cumputerWinAnimation {
+	0% {
+		background: var(--computer-element);
+		background-size: 80% 80%;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+	25%{
+		background: var(--computer-element);
+		background-size: 90% 90%;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+}
+@keyframes playerWinAnimation {
+	0% {
+		background: var(--player-element);
+		background-size: 80% 80%;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+	25% {
+		background: var(--player-element);
+		background-size: 90% 90%;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+}
