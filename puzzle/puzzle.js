@@ -15,7 +15,6 @@ const maxClicks = 100;
 let gameStarted = false;
 
 passCssVar();
- restart();
 const resizeObserver = new ResizeObserver(passCssVar);
 
 resizeObserver.observe(document.getElementById('container'));
