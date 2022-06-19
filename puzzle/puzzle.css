@@ -1,0 +1,142 @@
+
+
+.container,
+.container-win {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: transparent;
+    gap: 6px;
+    position: relative;
+}
+
+body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container-win {
+    animation: gapWinFade 1s forwards;
+    transform: scale(1.1, 1.1);
+    transform-origin: center center;
+
+    transition: transform 2s;
+}
+
+@keyframes gapWinFade {
+    0% {
+
+    }
+
+    25% {
+        gap: 4px;
+
+    }
+
+    100% {
+        gap: 0px;
+
+    }
+}
+
+.container-win .tile {
+    border: 1px solid transparent;
+    border-radius: 0px;
+    width: calc(var(--tile-width) + 4px);
+    height: calc(var(--tile-height) + 4px);
+    transition: border 1s, width 2s, height 2s, border-radius 1s;
+    cursor: not-allowed;
+	pointer-events: none;
+}
+
+.container-win .tile9 {
+    background: var(--var-img);
+    background-position: right bottom;
+    background-size: var(--container-width) var(--container-height);
+    border: 1px solid transparent;
+}
+
+.container-win .tile:hover {
+    transform: none;
+}
+
+.footer {
+    width: 480px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px;
+    align-items: center;
+}
+
+.new-game-button {
+    border-radius: 10px;
+    padding: 10px;
+    height: 40px;
+}
+
+.tile {
+    display: table-cell;
+    border: 1px solid black;
+    border-radius: 5px;
+    background: var(--var-img);
+    cursor: pointer;
+    background-size: var(--container-width) var(--container-height);
+    width: var(--tile-width) ;
+    height:var(--tile-height);
+    border-color: var(--border-color);
+}
+
+.tile:hover {
+    transform: scale(1.02);
+}
+
+.tile1 {
+    background-position: left top;
+}
+
+.tile2 {
+    background-position: center top;
+}
+
+.tile3 {
+    background-position: right top;
+}
+
+.tile4 {
+    background-position: left center;
+}
+
+.tile5 {
+    background-position: center center;
+}
+
+.tile6 {
+    background-position: right center;
+}
+
+.tile7 {
+    background-position: left bottom;
+}
+
+.tile8 {
+    background-position: center bottom;
+}
+
+.tile9 {
+    background: transparent;
+    cursor: default;
+    border: none;
+}
+
+.success-modal {
+    display: none;
+}
+
+.success-modal-visible {
+    display: none;
+}
